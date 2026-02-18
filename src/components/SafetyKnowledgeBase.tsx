@@ -23,6 +23,7 @@ import {
   Shield,
   Gauge,
   TrendingUp,
+  FileImage,
 } from "lucide-react";
 
 // --- Types & Interfaces ---
@@ -423,6 +424,12 @@ const SafetyKnowledgeBase = () => {
       label: "Safety Stats",
       icon: BarChart2,
       color: "text-indigo-600",
+    },
+    {
+      id: "visuals",
+      label: "Visual Resources",
+      icon: FileImage,
+      color: "text-orange-600",
     },
   ];
 
@@ -1245,15 +1252,104 @@ const SafetyKnowledgeBase = () => {
     </div>
   );
 
+  const renderVisuals = () => (
+    <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 animate-fadeIn">
+      <SectionCard title="Advanced Science & Math Mindmap" icon={Layers}>
+        <div className="rounded-lg overflow-hidden border border-gray-200 bg-white">
+          <img
+            src="/assets/mindmap.png"
+            alt="Science and Math Mindmap"
+            className="w-full h-auto cursor-zoom-in hover:scale-[1.02] transition-transform duration-500"
+          />
+        </div>
+        <div className="mt-4 p-3 bg-blue-50 rounded border border-blue-100 shadow-sm">
+          <h4 className="text-sm font-bold text-blue-800 mb-1">
+            NotebookLM Intelligence
+          </h4>
+          <p className="text-xs text-blue-700/80">
+            A comprehensive visual topology for Domain 1 principles.
+          </p>
+        </div>
+      </SectionCard>
+
+      <SectionCard title="BSAFE Framework Visual" icon={Shield}>
+        <div className="rounded-lg overflow-hidden border border-gray-200 bg-white">
+          <img
+            src="/assets/bsafe-framework.png"
+            alt="BSAFE Framework Diagram"
+            className="w-full h-auto cursor-zoom-in hover:scale-[1.02] transition-transform duration-500"
+          />
+        </div>
+        <div className="mt-4 p-3 bg-orange-50 rounded border border-orange-100 shadow-sm">
+          <h4 className="text-sm font-bold text-orange-800 mb-1">
+            Hazard Identification HUD
+          </h4>
+          <p className="text-xs text-orange-700/80">
+            Visual breakdown of the Burn, Shock, Arc, Fire, Explosion framework.
+          </p>
+        </div>
+      </SectionCard>
+    </div>
+  );
+
   // --- Main Render Structure ---
+
+  const menuItems = [
+    {
+      id: "math",
+      label: "Mathematics",
+      icon: Calculator,
+      color: "text-blue-600",
+    },
+    { id: "chem", label: "Chemistry", icon: Atom, color: "text-purple-600" },
+    {
+      id: "phys",
+      label: "Physics & Mech",
+      icon: BookOpen,
+      color: "text-emerald-600",
+    },
+    { id: "elec", label: "Electrical", icon: Zap, color: "text-yellow-600" },
+    {
+      id: "noise",
+      label: "Noise & Hearing",
+      icon: Volume2,
+      color: "text-pink-600",
+    },
+    { id: "vent", label: "Ventilation", icon: Wind, color: "text-cyan-600" },
+    { id: "rad", label: "Radiation", icon: Radio, color: "text-red-600" },
+    {
+      id: "therm",
+      label: "Thermal Stress",
+      icon: Thermometer,
+      color: "text-orange-600",
+    },
+    {
+      id: "econ",
+      label: "Engineering Econ",
+      icon: DollarSign,
+      color: "text-green-600",
+    },
+    {
+      id: "stat",
+      label: "Safety Stats",
+      icon: BarChart2,
+      color: "text-indigo-600",
+    },
+    {
+      id: "visuals",
+      label: "Visual Resources",
+      icon: FileImage,
+      color: "text-orange-600",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800 font-sans selection:bg-blue-100">
       {/* Navbar */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-2 rounded-lg shadow-md">
+            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-2 rounded-lg shadow-md shadow-blue-200">
               <FileText className="text-white" size={24} />
             </div>
             <div>
@@ -1266,7 +1362,7 @@ const SafetyKnowledgeBase = () => {
             </div>
           </div>
 
-          <div className="hidden lg:flex items-center gap-2 bg-gray-100 p-1 rounded-lg border border-gray-200">
+          <div className="hidden lg:flex items-center gap-2 bg-gray-100 p-1 rounded-lg border border-gray-200 focus-within:bg-white focus-within:ring-2 focus-within:ring-blue-500/20 transition-all">
             <Search size={16} className="ml-2 text-gray-400" />
             <input
               type="text"
@@ -1279,7 +1375,7 @@ const SafetyKnowledgeBase = () => {
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 text-gray-500"
+            className="lg:hidden p-2 text-gray-500 hover:bg-gray-100 rounded-lg"
           >
             {isMenuOpen ? <X /> : <Menu />}
           </button>
@@ -1354,7 +1450,12 @@ const SafetyKnowledgeBase = () => {
               {menuItems.find((m) => m.id === activeTab)?.icon &&
                 React.createElement(
                   menuItems.find((m) => m.id === activeTab)!.icon,
-                  { className: "text-blue-600" },
+                  {
+                    className:
+                      activeTab === activeTab
+                        ? menuItems.find((m) => m.id === activeTab)!.color
+                        : "text-blue-600",
+                  },
                 )}
               {menuItems.find((m) => m.id === activeTab)?.label}
             </h2>
@@ -1373,6 +1474,7 @@ const SafetyKnowledgeBase = () => {
           {activeTab === "therm" && renderTherm()}
           {activeTab === "econ" && renderEcon()}
           {activeTab === "stat" && renderStat()}
+          {activeTab === "visuals" && renderVisuals()}
 
           <footer className="mt-12 border-t border-gray-200 pt-6 text-center text-gray-500 text-sm">
             <div className="flex items-center justify-center gap-2 mb-2 text-blue-600 font-semibold">
@@ -1382,7 +1484,7 @@ const SafetyKnowledgeBase = () => {
                 Collaboration with Yousef Ali.
               </span>
             </div>
-            <p className="text-xs text-gray-400 font-mono">
+            <p className="text-xs text-gray-600 font-mono">
               2026 Powered By J. SERVO ENGINEERING • www.jservo.com
             </p>
           </footer>
