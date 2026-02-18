@@ -514,6 +514,12 @@ const SafetyKnowledgeBase = () => {
       icon: Gauge,
       color: "text-emerald-600",
     },
+    {
+      id: "sops",
+      label: "SOPs",
+      icon: FileText,
+      color: "text-indigo-600",
+    },
   ];
 
   // --- Content Renderers ---
@@ -1400,6 +1406,60 @@ const SafetyKnowledgeBase = () => {
     </div>
   );
 
+  const renderSOPs = () => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 animate-fadeIn">
+      {[
+        {
+          title: "SOP Manual - Page 1",
+          img: "/assets/sop-manual-page-1.jpg",
+          desc: "Emergency Response Procedures",
+        },
+        {
+          title: "SOP Manual - Page 2",
+          img: "/assets/sop-manual-page-2.jpg",
+          desc: "PPE Standards & Compliance",
+        },
+        {
+          title: "SOP Manual - Page 3",
+          img: "/assets/sop-manual-page-3.jpg",
+          desc: "Hazard Communication Protocol",
+        },
+        {
+          title: "SOP Manual - Page 4",
+          img: "/assets/sop-manual-page-4.jpg",
+          desc: "Incident Reporting Workflow",
+        },
+      ].map((sop, idx) => (
+        <SectionCard key={idx} title={sop.title} icon={FileText}>
+          <div
+            className="rounded-lg overflow-hidden border border-gray-200 bg-white cursor-zoom-in relative group min-h-[400px] flex items-center justify-center p-2"
+            onClick={() =>
+              setPreviewAsset({
+                type: "image",
+                url: sop.img,
+                title: sop.title,
+              })
+            }
+          >
+            <img
+              src={sop.img}
+              alt={sop.title}
+              className="max-h-full w-auto hover:scale-[1.02] transition-transform duration-500 rounded shadow-sm"
+            />
+            <div className="absolute inset-0 bg-indigo-600/0 group-hover:bg-indigo-600/5 transition-colors flex items-center justify-center">
+              <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg border border-white opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 flex items-center gap-2 text-xs font-bold text-indigo-700">
+                <Search size={14} /> View SOP Detail
+              </div>
+            </div>
+          </div>
+          <div className="mt-3 px-1">
+            <p className="text-xs text-gray-500 font-medium">{sop.desc}</p>
+          </div>
+        </SectionCard>
+      ))}
+    </div>
+  );
+
   const renderVisuals = () => (
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 animate-fadeIn">
       <SectionCard title="Advanced Science & Math Mindmap" icon={Layers}>
@@ -1623,6 +1683,7 @@ const SafetyKnowledgeBase = () => {
           {activeTab === "stat" && renderStat()}
           {activeTab === "visuals" && renderVisuals()}
           {activeTab === "reference" && renderReferenceCards()}
+          {activeTab === "sops" && renderSOPs()}
 
           <footer className="mt-12 border-t border-gray-200 pt-6 text-center text-gray-500 text-sm">
             <div className="flex items-center justify-center gap-2 mb-2 text-blue-600 font-semibold">
