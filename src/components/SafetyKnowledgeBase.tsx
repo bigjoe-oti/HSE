@@ -1294,55 +1294,6 @@ const SafetyKnowledgeBase = () => {
 
   // --- Main Render Structure ---
 
-  const menuItems = [
-    {
-      id: "math",
-      label: "Mathematics",
-      icon: Calculator,
-      color: "text-blue-600",
-    },
-    { id: "chem", label: "Chemistry", icon: Atom, color: "text-purple-600" },
-    {
-      id: "phys",
-      label: "Physics & Mech",
-      icon: BookOpen,
-      color: "text-emerald-600",
-    },
-    { id: "elec", label: "Electrical", icon: Zap, color: "text-yellow-600" },
-    {
-      id: "noise",
-      label: "Noise & Hearing",
-      icon: Volume2,
-      color: "text-pink-600",
-    },
-    { id: "vent", label: "Ventilation", icon: Wind, color: "text-cyan-600" },
-    { id: "rad", label: "Radiation", icon: Radio, color: "text-red-600" },
-    {
-      id: "therm",
-      label: "Thermal Stress",
-      icon: Thermometer,
-      color: "text-orange-600",
-    },
-    {
-      id: "econ",
-      label: "Engineering Econ",
-      icon: DollarSign,
-      color: "text-green-600",
-    },
-    {
-      id: "stat",
-      label: "Safety Stats",
-      icon: BarChart2,
-      color: "text-indigo-600",
-    },
-    {
-      id: "visuals",
-      label: "Visual Resources",
-      icon: FileImage,
-      color: "text-orange-600",
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800 font-sans selection:bg-blue-100">
       {/* Navbar */}
