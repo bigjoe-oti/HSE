@@ -371,3 +371,5 @@ const SafetyKnowledgeBase = () => {
 };
 
 export default SafetyKnowledgeBase;
+
+
