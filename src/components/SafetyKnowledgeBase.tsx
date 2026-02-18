@@ -444,6 +444,8 @@ const PreviewModal = ({
 
 // --- Main Application Component ---
 
+// --- Main Application Component ---
+
 const SafetyKnowledgeBase = () => {
   const [activeTab, setActiveTab] = useState("math");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -505,6 +507,12 @@ const SafetyKnowledgeBase = () => {
       label: "Visual Resources",
       icon: FileImage,
       color: "text-orange-600",
+    },
+    {
+      id: "reference",
+      label: "Reference Cards",
+      icon: Gauge,
+      color: "text-emerald-600",
     },
   ];
 
@@ -1327,6 +1335,71 @@ const SafetyKnowledgeBase = () => {
     </div>
   );
 
+  const renderReferenceCards = () => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fadeIn">
+      {[
+        {
+          title: "Unit Conversions",
+          img: "/assets/Unit-Conversions-Reference-Card.png",
+          color: "blue",
+        },
+        {
+          title: "Noise Exposure",
+          img: "/assets/Noise-Exposure-Reference-Card.png",
+          color: "pink",
+        },
+        {
+          title: "Radiation Shielding",
+          img: "/assets/Radiation-Shielding-Reference-Card.png",
+          color: "red",
+        },
+        {
+          title: "Rigging and Lifting",
+          img: "/assets/Rigging-and-lifting-Reference-Card.png",
+          color: "indigo",
+        },
+        {
+          title: "Ventilation",
+          img: "/assets/Ventiliation-reference-card.png",
+          color: "cyan",
+        },
+        {
+          title: "Heat and Cold",
+          img: "/assets/Heat-and-cold-reference-card.png",
+          color: "orange",
+        },
+      ].map((card, idx) => (
+        <SectionCard key={idx} title={card.title} icon={BookOpen}>
+          <div
+            className="rounded-lg overflow-hidden border border-gray-200 bg-white cursor-zoom-in relative group min-h-[300px] flex items-center justify-center"
+            onClick={() =>
+              setPreviewAsset({
+                type: "image",
+                url: card.img,
+                title: card.title,
+              })
+            }
+          >
+            <img
+              src={card.img}
+              alt={card.title}
+              className="max-h-full w-auto hover:scale-[1.02] transition-transform duration-500"
+            />
+            <div
+              className={`absolute inset-0 bg-${card.color}-600/0 group-hover:bg-${card.color}-600/5 transition-colors flex items-center justify-center`}
+            >
+              <div
+                className={`bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg border border-white opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 flex items-center gap-2 text-xs font-bold text-${card.color}-700`}
+              >
+                <Search size={14} /> View Reference
+              </div>
+            </div>
+          </div>
+        </SectionCard>
+      ))}
+    </div>
+  );
+
   const renderVisuals = () => (
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 animate-fadeIn">
       <SectionCard title="Advanced Science & Math Mindmap" icon={Layers}>
@@ -1538,6 +1611,7 @@ const SafetyKnowledgeBase = () => {
           {activeTab === "econ" && renderEcon()}
           {activeTab === "stat" && renderStat()}
           {activeTab === "visuals" && renderVisuals()}
+          {activeTab === "reference" && renderReferenceCards()}
 
           <footer className="mt-12 border-t border-gray-200 pt-6 text-center text-gray-500 text-sm">
             <div className="flex items-center justify-center gap-2 mb-2 text-blue-600 font-semibold">
