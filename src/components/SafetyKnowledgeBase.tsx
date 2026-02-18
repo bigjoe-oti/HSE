@@ -1476,9 +1476,20 @@ const SafetyKnowledgeBase = () => {
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-2 rounded-lg shadow-md shadow-blue-200">
-              <FileText className="text-white" size={24} />
-            </div>
+            <a
+              href="https://jservo.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative transition-all duration-300 hover:scale-105 active:scale-95"
+            >
+              <div className="bg-white p-1 rounded-xl shadow-md border border-gray-100 group-hover:shadow-lg group-hover:border-blue-100 transition-all">
+                <img
+                  src="/assets/logo-jservo.png"
+                  alt="J. Servo Logo"
+                  className="w-10 h-10 object-contain"
+                />
+              </div>
+            </a>
             <div>
               <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-800">
                 Ahmed Shady Knowledge Base
