@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Calculator,
   Atom,
@@ -25,6 +25,13 @@ import {
   TrendingUp,
   FileImage,
 } from "lucide-react";
+
+// --- Preview Asset Type ---
+interface PreviewAsset {
+  type: "image" | "pdf";
+  url: string;
+  title: string;
+}
 
 // --- Types & Interfaces ---
 interface SectionProps {
@@ -377,12 +384,80 @@ const InfoTag: React.FC<{ label: string; value: string; color?: string }> = ({
   );
 };
 
+const PreviewModal = ({
+  asset,
+  onClose,
+}: {
+  asset: PreviewAsset;
+  onClose: () => void;
+}) => (
+  <div
+    className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 animate-fadeIn"
+    onClick={onClose}
+  >
+    <div className="absolute inset-0 bg-gray-900/60 backdrop-blur-md" />
+    <div
+      className="relative bg-white w-full max-w-6xl h-full max-h-[90vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-gray-200 animate-scaleUp"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50/50">
+        <div>
+          <h3 className="font-bold text-gray-900">{asset.title}</h3>
+          <p className="text-[10px] text-gray-500 uppercase tracking-widest font-mono">
+            {asset.type === "pdf" ? "Document Preview" : "Visual Resource"}
+          </p>
+        </div>
+        <button
+          onClick={onClose}
+          className="p-2 hover:bg-gray-200 rounded-full transition-colors text-gray-500"
+        >
+          <X size={20} />
+        </button>
+      </div>
+
+      <div className="flex-1 overflow-auto bg-gray-100/50 flex items-center justify-center p-4">
+        {asset.type === "pdf" ? (
+          <iframe
+            src={`${asset.url}#toolbar=0`}
+            className="w-full h-full rounded shadow-lg bg-white"
+            title={asset.title}
+          />
+        ) : (
+          <img
+            src={asset.url}
+            alt={asset.title}
+            className="max-w-full max-h-full object-contain shadow-2xl rounded"
+          />
+        )}
+      </div>
+
+      {asset.type === "image" && (
+        <div className="px-6 py-3 bg-white border-t border-gray-100 flex justify-center">
+          <p className="text-xs text-gray-400 italic">
+            Tip: Use your browser's zoom or trackpad to inspect details.
+          </p>
+        </div>
+      )}
+    </div>
+  </div>
+);
+
 // --- Main Application Component ---
 
 const SafetyKnowledgeBase = () => {
   const [activeTab, setActiveTab] = useState("math");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [search, setSearch] = useState("");
+  const [previewAsset, setPreviewAsset] = useState<PreviewAsset | null>(null);
+
+  // --- Keyboard support for modal ---
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPreviewAsset(null);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const menuItems = [
     {
@@ -1255,12 +1330,26 @@ const SafetyKnowledgeBase = () => {
   const renderVisuals = () => (
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 animate-fadeIn">
       <SectionCard title="Advanced Science & Math Mindmap" icon={Layers}>
-        <div className="rounded-lg overflow-hidden border border-gray-200 bg-white">
+        <div
+          className="rounded-lg overflow-hidden border border-gray-200 bg-white cursor-zoom-in relative group"
+          onClick={() =>
+            setPreviewAsset({
+              type: "image",
+              url: "/assets/mindmap.png",
+              title: "Advanced Science & Math Mindmap",
+            })
+          }
+        >
           <img
             src="/assets/mindmap.png"
             alt="Science and Math Mindmap"
-            className="w-full h-auto cursor-zoom-in hover:scale-[1.02] transition-transform duration-500"
+            className="w-full h-auto hover:scale-[1.02] transition-transform duration-500"
           />
+          <div className="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/5 transition-colors flex items-center justify-center">
+            <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg border border-white opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 flex items-center gap-2 text-xs font-bold text-blue-700">
+              <Search size={14} /> Click to Zoom
+            </div>
+          </div>
         </div>
         <div className="mt-4 p-3 bg-blue-50 rounded border border-blue-100 shadow-sm">
           <h4 className="text-sm font-bold text-blue-800 mb-1">
@@ -1273,12 +1362,26 @@ const SafetyKnowledgeBase = () => {
       </SectionCard>
 
       <SectionCard title="BSAFE Framework Visual" icon={Shield}>
-        <div className="rounded-lg overflow-hidden border border-gray-200 bg-white">
+        <div
+          className="rounded-lg overflow-hidden border border-gray-200 bg-white cursor-zoom-in relative group"
+          onClick={() =>
+            setPreviewAsset({
+              type: "image",
+              url: "/assets/bsafe-framework.png",
+              title: "BSAFE Framework Visual",
+            })
+          }
+        >
           <img
             src="/assets/bsafe-framework.png"
             alt="BSAFE Framework Diagram"
-            className="w-full h-auto cursor-zoom-in hover:scale-[1.02] transition-transform duration-500"
+            className="w-full h-auto hover:scale-[1.02] transition-transform duration-500"
           />
+          <div className="absolute inset-0 bg-orange-600/0 group-hover:bg-orange-600/5 transition-colors flex items-center justify-center">
+            <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg border border-white opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 flex items-center gap-2 text-xs font-bold text-orange-700">
+              <Search size={14} /> Click to Zoom
+            </div>
+          </div>
         </div>
         <div className="mt-4 p-3 bg-orange-50 rounded border border-orange-100 shadow-sm">
           <h4 className="text-sm font-bold text-orange-800 mb-1">
@@ -1370,19 +1473,28 @@ const SafetyKnowledgeBase = () => {
           </div>
 
           <div className="mt-8 px-4 lg:px-0">
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100 shadow-sm">
-              <div className="flex items-center gap-2 mb-2 text-blue-700 font-bold text-sm">
+            <button
+              onClick={() =>
+                setPreviewAsset({
+                  type: "pdf",
+                  url: "/assets/source.pdf",
+                  title: "Advanced Sciences and Math for HSE Professionals",
+                })
+              }
+              className="w-full text-left bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100 shadow-sm hover:shadow-md hover:border-blue-200 transition-all group"
+            >
+              <div className="flex items-center gap-2 mb-2 text-blue-700 font-bold text-sm group-hover:text-blue-800">
                 <FileText size={16} /> Original Source
               </div>
               <div className="space-y-2">
-                <p className="text-[11px] text-blue-800/80 hover:text-blue-950 font-medium transition-colors cursor-default">
-                  • Domain 1 - Advanced Sciences and Math (1-30)
+                <p className="text-[11px] text-blue-800/80 group-hover:text-blue-950 font-medium transition-colors">
+                  • Advanced Sciences and Math for HSE
                 </p>
-                <p className="text-[11px] text-blue-800/80 hover:text-blue-950 font-medium transition-colors cursor-default">
-                  • Domain 1 - Advanced Sciences and Math (31-65)
-                </p>
+                <div className="flex items-center gap-1 text-[9px] text-blue-500 font-bold uppercase tracking-tighter mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Search size={10} /> Click to Preview Source PDF
+                </div>
               </div>
-            </div>
+            </button>
           </div>
         </aside>
 
@@ -1441,6 +1553,14 @@ const SafetyKnowledgeBase = () => {
           </footer>
         </main>
       </div>
+
+      {/* Preview Modal */}
+      {previewAsset && (
+        <PreviewModal
+          asset={previewAsset}
+          onClose={() => setPreviewAsset(null)}
+        />
+      )}
     </div>
   );
 };
