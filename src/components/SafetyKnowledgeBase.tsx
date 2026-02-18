@@ -520,6 +520,12 @@ const SafetyKnowledgeBase = () => {
       icon: FileText,
       color: "text-indigo-600",
     },
+    {
+      id: "flash",
+      label: "Flash Cards",
+      icon: Zap,
+      color: "text-amber-600",
+    },
   ];
 
   // --- Content Renderers ---
@@ -1406,6 +1412,41 @@ const SafetyKnowledgeBase = () => {
     </div>
   );
 
+  const renderFlashCards = () => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-fadeIn">
+      {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+        <SectionCard
+          key={num}
+          title={`Flash Card - Set ${num}`}
+          icon={Zap}
+          className="hover:border-amber-300 transition-colors"
+        >
+          <div
+            className="rounded-lg overflow-hidden border border-gray-100 bg-white cursor-zoom-in relative group aspect-[3/4] flex items-center justify-center p-2"
+            onClick={() =>
+              setPreviewAsset({
+                type: "image",
+                url: `/assets/flashcard-${num}.jpg`,
+                title: `HSE Flash Card - Quick Study Set ${num}`,
+              })
+            }
+          >
+            <img
+              src={`/assets/flashcard-${num}.jpg`}
+              alt={`Flash Card ${num}`}
+              className="max-h-full w-auto hover:scale-105 transition-transform duration-500 rounded shadow-sm"
+            />
+            <div className="absolute inset-0 bg-amber-600/0 group-hover:bg-amber-600/5 transition-colors flex items-center justify-center">
+              <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg border border-white opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 flex items-center gap-2 text-xs font-bold text-amber-700">
+                <Search size={14} /> Quick Study
+              </div>
+            </div>
+          </div>
+        </SectionCard>
+      ))}
+    </div>
+  );
+
   const renderSOPs = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 animate-fadeIn">
       {[
@@ -1684,6 +1725,7 @@ const SafetyKnowledgeBase = () => {
           {activeTab === "visuals" && renderVisuals()}
           {activeTab === "reference" && renderReferenceCards()}
           {activeTab === "sops" && renderSOPs()}
+          {activeTab === "flash" && renderFlashCards()}
 
           <footer className="mt-12 border-t border-gray-200 pt-6 text-center text-gray-500 text-sm">
             <div className="flex items-center justify-center gap-2 mb-2 text-blue-600 font-semibold">
