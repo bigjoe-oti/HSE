@@ -119,7 +119,7 @@ const DataTable: React.FC<TableProps> = ({
       <tbody>
         {data.map((row, i) => (
           <tr
-            key={row[0] + i}
+            key={`${row[0]}-${i}`}
             className="border-b border-slate-700/50 hover:bg-slate-700/20 transition-colors"
           >
             {row.map((cell, j) => (
