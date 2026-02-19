@@ -1657,55 +1657,56 @@ const SafetyKnowledgeBase = () => {
                 Modules
               </div>
               {menuItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => {
-                  setActiveTab(item.id);
-                  setIsMenuOpen(false);
-                }}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                  activeTab === item.id
-                    ? "bg-blue-50 text-blue-700 shadow-sm border border-blue-100"
-                    : "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
-                }`}
-              >
-                <item.icon
-                  size={18}
-                  className={
-                    activeTab === item.id ? item.color : "text-gray-400"
-                  }
-                />
-                {item.label}
-                {activeTab === item.id && (
-                  <ChevronRight size={14} className="ml-auto opacity-50" />
-                )}
-              </button>
-            ))}
-          </div>
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setActiveTab(item.id);
+                    setIsMenuOpen(false);
+                  }}
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                    activeTab === item.id
+                      ? "bg-blue-50 text-blue-700 shadow-sm border border-blue-100"
+                      : "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+                  }`}
+                >
+                  <item.icon
+                    size={18}
+                    className={
+                      activeTab === item.id ? item.color : "text-gray-400"
+                    }
+                  />
+                  {item.label}
+                  {activeTab === item.id && (
+                    <ChevronRight size={14} className="ml-auto opacity-50" />
+                  )}
+                </button>
+              ))}
+            </div>
 
-          <div className="mt-8 px-4 lg:px-0">
-            <button
-              onClick={() =>
-                setPreviewAsset({
-                  type: "pdf",
-                  url: "/assets/source.pdf",
-                  title: "Advanced Sciences and Math for HSE Professionals",
-                })
-              }
-              className="w-full text-left bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100 shadow-sm hover:shadow-md hover:border-blue-200 transition-all group"
-            >
-              <div className="flex items-center gap-2 mb-2 text-blue-700 font-bold text-sm group-hover:text-blue-800">
-                <FileText size={16} /> Original Source
-              </div>
-              <div className="space-y-2">
-                <p className="text-[11px] text-blue-800/80 group-hover:text-blue-950 font-medium transition-colors">
-                  • Advanced Sciences and Math for HSE
-                </p>
-                <div className="flex items-center gap-1 text-[9px] text-blue-500 font-bold uppercase tracking-tighter mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Search size={10} /> Click to Preview Source PDF
+            <div className="mt-8 px-4 lg:px-0">
+              <button
+                onClick={() =>
+                  setPreviewAsset({
+                    type: "pdf",
+                    url: "/assets/source.pdf",
+                    title: "Advanced Sciences and Math for HSE Professionals",
+                  })
+                }
+                className="w-full text-left bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100 shadow-sm hover:shadow-md hover:border-blue-200 transition-all group"
+              >
+                <div className="flex items-center gap-2 mb-2 text-blue-700 font-bold text-sm group-hover:text-blue-800">
+                  <FileText size={16} /> Original Source
                 </div>
-              </div>
-            </button>
+                <div className="space-y-2">
+                  <p className="text-[11px] text-blue-800/80 group-hover:text-blue-950 font-medium transition-colors">
+                    • Advanced Sciences and Math for HSE
+                  </p>
+                  <div className="flex items-center gap-1 text-[9px] text-blue-500 font-bold uppercase tracking-tighter mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Search size={10} /> Click to Preview Source PDF
+                  </div>
+                </div>
+              </button>
+            </div>
           </div>
         </aside>
 
