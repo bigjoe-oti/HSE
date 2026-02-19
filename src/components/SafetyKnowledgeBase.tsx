@@ -1348,7 +1348,7 @@ const SafetyKnowledgeBase = () => {
   );
 
   const renderReferenceCards = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fadeIn">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-fadeIn">
       {[
         {
           title: "Unit Conversions",
@@ -1413,7 +1413,7 @@ const SafetyKnowledgeBase = () => {
   );
 
   const renderFlashCards = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-fadeIn">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-fadeIn">
       {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
         <SectionCard
           key={num}
@@ -1448,7 +1448,7 @@ const SafetyKnowledgeBase = () => {
   );
 
   const renderSOPs = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 animate-fadeIn">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 animate-fadeIn">
       {[
         {
           title: "SOP Manual - Page 1",
@@ -1592,7 +1592,7 @@ const SafetyKnowledgeBase = () => {
               </div>
             </a>
             <div>
-              <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-800">
+              <h1 className="text-lg sm:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-800 leading-tight">
                 Ahmed Shady Knowledge Base
               </h1>
               <div className="text-[10px] text-gray-500 uppercase tracking-widest flex items-center gap-1">
@@ -1622,15 +1622,41 @@ const SafetyKnowledgeBase = () => {
       </nav>
 
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 p-4 lg:p-6">
+        {/* Sidebar Backdrop (Mobile Only) */}
+        {isMenuOpen && (
+          <div
+            className="fixed inset-0 z-30 bg-gray-900/40 backdrop-blur-sm lg:hidden transition-opacity duration-300"
+            onClick={() => setIsMenuOpen(false)}
+          />
+        )}
+
         {/* Sidebar / Mobile Menu */}
         <aside
-          className={`fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 lg:translate-x-0 lg:static lg:h-auto lg:bg-transparent lg:border-none lg:w-64 shrink-0 shadow-xl lg:shadow-none ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
+          className={`fixed inset-y-0 left-0 z-40 w-72 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:h-auto lg:bg-transparent lg:border-none lg:w-64 shrink-0 shadow-2xl lg:shadow-none ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
         >
-          <div className="p-4 lg:p-0 space-y-1">
-            <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 px-3 pt-2">
-              Modules
+          <div className="p-4 lg:p-0 space-y-4">
+            {/* Mobile Search */}
+            <div className="lg:hidden">
+              <div className="relative group">
+                <Search
+                  size={16}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors"
+                />
+                <input
+                  type="text"
+                  placeholder="Search database..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2.5 pl-10 pr-4 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
+                />
+              </div>
             </div>
-            {menuItems.map((item) => (
+
+            <div className="space-y-1">
+              <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 px-3 pt-2">
+                Modules
+              </div>
+              {menuItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => {
